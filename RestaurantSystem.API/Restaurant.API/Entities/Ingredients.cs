@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 
 namespace Restaurant.API.Entities;
-
 public class Ingredients
 {
     [Key]
@@ -11,10 +10,7 @@ public class Ingredients
     [MaxLength(200)]
     public string Name { get; set; }
     public ICollection<Snack> Snacks { get; set; } = new List<Snack>();
-    public Ingredients()
-    {
-            
-    }
+    public Ingredients() {}
     [SetsRequiredMembers]
     public Ingredients(int id, string name)
     {
