@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.API.DbContexts;
-using Restaurant.API.Models;
 using Restaurant.API.Models;
 
 namespace Restaurant.API.EndpointHandlers;

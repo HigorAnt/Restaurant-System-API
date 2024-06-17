@@ -8,9 +8,22 @@ builder.Services.AddDbContext<SnackDbContext>(o => o.UseSqlite(builder.Configura
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddProblemDetails();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.RegisterSnacksEndpoints();
 app.RegisterIngredientsEndpoints();

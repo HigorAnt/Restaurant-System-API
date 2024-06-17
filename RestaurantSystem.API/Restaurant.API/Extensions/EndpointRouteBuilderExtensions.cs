@@ -6,7 +6,7 @@ namespace Restaurant.API.Extensions;
 public static class EndpointRouteBuilderExtensions
 {
     public static void RegisterSnacksEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
-    {
+    { 
         var snacksEndpoints = endpointRouteBuilder.MapGroup("/snacks");
         var snacksForIdEndpoints = snacksEndpoints.MapGroup("/{snacksId:int}");
 
@@ -16,7 +16,7 @@ public static class EndpointRouteBuilderExtensions
         snacksEndpoints.MapGet("", SnackHandlers.GetSnackAsync);
         snacksForIdEndpoints.MapGet("", SnackHandlers.GetSnackById).WithName("GetSnack");
 
-        snacksEndpoints.MapPost("", SnackHandlers.CreateSnackAsync);
+        //snacksEndpoints.MapPost("", SnackHandlers.CreateSnackAsync);
         snacksEndpoints.MapPost("", SnackHandlers.CreateSnackAsync).AddEndpointFilter<ValidateAnnotationFilter>();
 
         snacksForIdEndpoints.MapPut("", SnackHandlers.UpdateSnackAsync);
@@ -32,5 +32,9 @@ public static class EndpointRouteBuilderExtensions
         var ingredientsEndpoints = endpointRouteBuilder.MapGroup("/snacks/{snackId:int}/ingredients");
 
         ingredientsEndpoints.MapGet("", IngredientsHandlers.GetIngredientesAsync);
+        ingredientsEndpoints.MapPost("", () =>
+        {
+            throw new NotImplementedException();
+        });
     }
 }
