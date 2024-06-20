@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restaurant.API.Entities;
 
 namespace Restaurant.API.DbContexts;
 
-public class SnackDbContext(DbContextOptions<SnackDbContext> options) : DbContext(options)
+public class SnackDbContext(DbContextOptions<SnackDbContext> options) : IdentityDbContext(options)
 {
     public DbSet<Snack> Snacks { get; set; } = null!;
     public DbSet<Ingredients> Ingredientes { get; set; } = null!;
