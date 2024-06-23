@@ -18,23 +18,25 @@ public static class EndpointRouteBuilderExtensions
             .WithSummary("Este endpoint está deprecated e será descontinuado na versão 2 desta API")
             .WithDescription("Por favor utilize a outra rota desta API sendo ela /snacks/{snackId} para evitar maiores transtornos futuros");
 
-        var snacksEndpoints = endpointRouteBuilder.MapGroup("/snack").RequireAuthorization();
+        var snacksEndpoints = endpointRouteBuilder.MapGroup("/snacks").RequireAuthorization();
 
-        var snacksForIdEndpoints = snacksEndpoints.MapGroup("/{snacksId:int}");
+        var snacksForIdEndpoints = snacksEndpoints.MapGroup("/{snackId:int}");
 
         var snackWithIdAndLockFilterEndpoints = endpointRouteBuilder.MapGroup("/snacks/{snackId:int}").
             RequireAuthorization("RequireAdminFromBrazil").RequireAuthorization()
             .AddEndpointFilter(new SnackIsLockedFilter(1)).AddEndpointFilter(new SnackIsLockedFilter(2));
 
         snacksEndpoints.MapGet("", SnackHandlers.GetSnackAsync).WithOpenApi()
-            .WithSummary("Esta rota retornará todos os Rangos");
+            .WithSummary("Esta rota retornará todos as comidas");
 
-        snacksForIdEndpoints.MapGet("", SnackHandlers.GetSnackById).WithName("GetSnack").AllowAnonymous();
+        snacksForIdEndpoints.MapGet("", SnackHandlers.GetSnackById).WithName("GetSnack").AllowAnonymous()
+            .WithSummary("Essa rota irá retorna uma comida a partir do ID informado");
 
         //snacksEndpoints.MapPost("", SnackHandlers.CreateSnackAsync);
-        snacksEndpoints.MapPost("", SnackHandlers.CreateSnackAsync).AddEndpointFilter<ValidateAnnotationFilter>();
+        snacksEndpoints.MapPost("", SnackHandlers.CreateSnackAsync).AddEndpointFilter<ValidateAnnotationFilter>()
+            .WithSummary("Essa rota irá criar uma nova comida");
 
-        snacksForIdEndpoints.MapPut("", SnackHandlers.UpdateSnackAsync);
+        snacksForIdEndpoints.MapPut("", SnackHandlers.UpdateSnackAsync).WithSummary("Essa rota irá atualizar uma comida");
         //snackWithIdAndLockFilterEndpoints.MapPut("", SnackHandlers.UpdateSnackAsync);
 
         snacksForIdEndpoints.MapDelete("", SnackHandlers.DeleteSnackAsync).
